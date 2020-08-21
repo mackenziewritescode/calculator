@@ -1,0 +1,48 @@
+#wrapper {
+  #calculator {
+    display: inline-block;
+    width: 400px;
+    height: 600px;
+    background: dodgerblue;
+    padding: 10px;
+
+    #formula {
+      //width: 100%;
+      height: 80px;
+      background: black;
+      color: white;
+      margin-bottom: 10px;
+      padding: 10px;
+      font-size: 20px;
+      word-wrap: break-word;
+    }
+    #output {
+      //width: 100%;
+      height: 60px;
+      background: black;
+      color: white;
+      //padding: 10px;
+      margin-bottom: 10px;
+      font-size: 40px;
+      text-align: right;
+      padding-right: 10px;
+    }
+    #buttonWrap {
+      display: grid;
+      height: 400px;
+      grid-template-rows: repeat(5, 1fr);
+      grid-template-columns: repeat(4, 1fr);
+      gap: 4px;
+
+      .clearBtn {
+        grid-column: 1 / span 2;
+      }
+      .delBtn {
+      }
+      .rightBtn {
+      }
+      .mainBtn {
+      }
+    }
+  }
+}
