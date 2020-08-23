@@ -7,7 +7,7 @@ const buttonsArr = [
   },
   {
     value: "Del",
-    display: "Del",
+    display: "Del", // FiDelete
     type: "modifier",
     class: "delBtn",
   },
