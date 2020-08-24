@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState } from "react";
 import "./App.scss";
 import buttonsArr from "./buttonsArr";
 
@@ -54,8 +54,12 @@ function App() {
       .replace(/[-/*+=]/g, " ")
       .split(" ");
     const currentNum = numArr[numArr.length - 1];
+    const percentage = (currentNum / 100).toString();
+    const formulaWithPercentage = formula
+      .toString()
+      .slice(0, -currentNum.length)
+      .concat(percentage);
     const decimalRegex = /\./g;
-    console.log(currentNum);
 
     switch (value) {
       case "C":
@@ -64,33 +68,52 @@ function App() {
         setOutput("0");
         break;
       case "Del":
-        const displayString = displayFormula.slice(0, -1);
-        const string = formula.slice(0, -1);
-        setDisplayFormula(displayString);
-        setFormula(string);
+        if (formula.length <= 1) {
+          setDisplayFormula("0");
+          setFormula("0");
+          setOutput("0");
+        } else if (
+          formula.length <= 3 &&
+          /[-/*+=]/.test(formula[1]) === true
+        ) {
+          setDisplayFormula("0");
+          setFormula("0");
+          setOutput("0");
+        } else {
+          const displayString = displayFormula
+            .slice(0, -1)
+            .toString();
+          const string = formula.slice(0, -1).toString();
+          setDisplayFormula(displayString);
+          setFormula(string);
+          setOutput(eval(string).toString());
+        }
         break;
       case "=":
         setDisplayFormula(removeOpBeforeEquals(formula));
         setFormula(removeOpBeforeEquals(formula));
         break;
-      // case "%":
-      //     let percentage = eval(formula) / 100;
-      //     setFormula(percentage);
-      //     setOutput(percentage);
-      //   break;
+      case "%":
+        if (testMultipleOps(formula)) {
+          setDisplayFormula(displayFormula);
+          setFormula(formula);
+        } else {
+          setDisplayFormula(displayFormula + "%");
+          setFormula(formulaWithPercentage);
+          setOutput(eval(formulaWithPercentage).toString());
+        }
+        break;
       case "+":
       case "-":
       case "*":
       case "/":
         if (testMultipleOps(formula)) {
-          setDisplayFormula(formula);
+          setDisplayFormula(displayFormula);
           setFormula(formula);
         } else {
-          setDisplayFormula(formula + display);
+          setDisplayFormula(displayFormula + display);
           setFormula(formula + value);
         }
-        // setDisplayFormula(formula + display);
-        // setFormula(formula + value);
         break;
       case ".":
         if (!decimalRegex.test(currentNum)) {
@@ -106,27 +129,28 @@ function App() {
         } else {
           setDisplayFormula(displayFormula + display);
           setFormula(formula + value);
-          setOutput(eval(formula + value));
+          setOutput(eval(formula + value).toString());
         }
     }
   };
 
   function removeOpBeforeEquals(string) {
-    if (
-      string.slice(-1) === "+" ||
-      string.slice(-1) === "-" ||
-      string.slice(-1) === "*" ||
-      string.slice(-1) === "/"
-    ) {
-      return eval(string.slice(0, -1));
+    // if (
+    //   string.slice(-1) === "+" ||
+    //   string.slice(-1) === "-" ||
+    //   string.slice(-1) === "*" ||
+    //   string.slice(-1) === "/"
+    // ) {
+    if (testMultipleOps(string)) {
+      return eval(string.slice(0, -1)).toString();
     } else {
-      return eval(string);
+      return eval(string).toString();
     }
   }
 
   function testMultipleOps(string) {
     let opRegex = /[-/*+=]/g;
-    let lastChar = string.slice(-1);
+    let lastChar = string.toString().slice(-1);
     if (opRegex.test(lastChar)) {
       return true;
     } else {
