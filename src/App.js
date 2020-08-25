@@ -55,11 +55,20 @@ function App() {
       .split(" ");
     const currentNum = numArr[numArr.length - 1];
     const percentage = (currentNum / 100).toString();
+    const reversePercentage = (currentNum * 100).toString();
     const formulaWithPercentage = formula
       .toString()
       .slice(0, -currentNum.length)
       .concat(percentage);
+    const formulaReversePercentage = formula
+      .toString()
+      .slice(0, -currentNum.length)
+      .concat(reversePercentage);
     const decimalRegex = /\./g;
+    const displayDelString = displayFormula
+      .slice(0, -1)
+      .toString();
+    const delString = formula.toString().slice(0, -1);
 
     switch (value) {
       case "C":
@@ -68,25 +77,31 @@ function App() {
         setOutput("0");
         break;
       case "Del":
-        if (formula.length <= 1) {
+        if (displayFormula.length <= 1) {
+          //------------------------- if there's only 1 char, set to 0
           setDisplayFormula("0");
           setFormula("0");
           setOutput("0");
         } else if (
+          // ----------------------- if the only char is an operator, set to 0
           formula.length <= 3 &&
-          /[-/*+=]/.test(formula[1]) === true
+          /[-/*+=]/.test(formula[1]) === true &&
+          formula[0] === 0
         ) {
           setDisplayFormula("0");
           setFormula("0");
           setOutput("0");
+        } else if (
+          // ----------------- if the last char is %, multiply last char by 100
+          displayFormula.toString().slice(-1) === "%"
+        ) {
+          setDisplayFormula(displayDelString);
+          setFormula(formulaReversePercentage);
+          handleOutput(formulaReversePercentage);
         } else {
-          const displayString = displayFormula
-            .slice(0, -1)
-            .toString();
-          const string = formula.slice(0, -1).toString();
-          setDisplayFormula(displayString);
-          setFormula(string);
-          setOutput(eval(string).toString());
+          setDisplayFormula(displayDelString);
+          setFormula(delString);
+          handleOutput(delString);
         }
         break;
       case "=":
@@ -94,13 +109,17 @@ function App() {
         setFormula(removeOpBeforeEquals(formula));
         break;
       case "%":
-        if (testMultipleOps(formula)) {
+        if (
+          testMultipleOps(formula) ||
+          displayFormula.toString().slice(-1) === "%" ||
+          formula.toString() === "0"
+        ) {
           setDisplayFormula(displayFormula);
           setFormula(formula);
         } else {
           setDisplayFormula(displayFormula + "%");
           setFormula(formulaWithPercentage);
-          setOutput(eval(formulaWithPercentage).toString());
+          handleOutput(formulaWithPercentage);
         }
         break;
       case "+":
@@ -125,26 +144,30 @@ function App() {
         if (formula === "0") {
           setDisplayFormula(display);
           setFormula(value);
-          setOutput(parseFloat(value));
+          handleOutput(parseFloat(value));
         } else {
           setDisplayFormula(displayFormula + display);
           setFormula(formula + value);
-          setOutput(eval(formula + value).toString());
+          handleOutput(formula + value);
         }
     }
   };
 
   function removeOpBeforeEquals(string) {
-    // if (
-    //   string.slice(-1) === "+" ||
-    //   string.slice(-1) === "-" ||
-    //   string.slice(-1) === "*" ||
-    //   string.slice(-1) === "/"
-    // ) {
     if (testMultipleOps(string)) {
-      return eval(string.slice(0, -1)).toString();
+      return (
+        Math.round(
+          1000000000000 * eval(string.slice(0, -1))
+        ) / 1000000000000
+      ).toString();
+
+      //return eval(string.slice(0, -1)).toString();
     } else {
-      return eval(string).toString();
+      return (
+        Math.round(1000000000000 * eval(string)) /
+        1000000000000
+      ).toString();
+      //return eval(string).toString();
     }
   }
 
@@ -156,6 +179,22 @@ function App() {
     } else {
       return false;
     }
+  }
+
+  function handleOutput(string) {
+    let answer;
+    if (testMultipleOps(string)) {
+      answer = (
+        Math.round(
+          10000000000 * eval(string.slice(0, -1))
+        ) / 10000000000
+      ).toString();
+    } else {
+      answer = (
+        Math.round(10000000000 * eval(string)) / 10000000000
+      ).toString();
+    }
+    setOutput(answer);
   }
 
   return (
@@ -171,17 +210,3 @@ function App() {
 }
 
 export default App;
-
-// case "=":
-//   let equalsTest = formula;
-//   if (
-//     equalsTest[equalsTest.length - 1] === "+" ||
-//     "-" ||
-//     "/" ||
-//     "*"
-//   ) {
-//     equalsTest = equalsTest.slice(0, -1);
-//   }
-//   setDisplayFormula(eval(equalsTest)); // !!!!
-//   setFormula(eval(equalsTest));
-//   break;
