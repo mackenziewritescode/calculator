@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./App.scss";
 import buttonsArr from "./buttonsArr";
+import { FiDelete } from "react-icons/fi";
 
 function Formula(props) {
   return <div id="formula">{props.displayFormula}</div>;
@@ -16,6 +17,7 @@ function Button(props) {
   };
 
   const button = props.button;
+
   return (
     <button
       className={button.class}
@@ -23,7 +25,11 @@ function Button(props) {
         handleClick(button.value, button.display)
       }
     >
-      {button.display}
+      {button.display === "Del" ? (
+        <FiDelete />
+      ) : (
+        button.display
+      )}
     </button>
   );
 }
@@ -64,7 +70,6 @@ function App() {
       .toString()
       .slice(0, -currentNum.length)
       .concat(reversePercentage);
-    const decimalRegex = /\./g;
     const displayDelString = displayFormula
       .slice(0, -1)
       .toString();
@@ -126,7 +131,10 @@ function App() {
       case "-":
       case "*":
       case "/":
-        if (testMultipleOps(formula)) {
+        if (
+          testMultipleOps(formula) ||
+          testEmptyDisplay(displayFormula, value)
+        ) {
           setDisplayFormula(displayFormula);
           setFormula(formula);
         } else {
@@ -135,7 +143,7 @@ function App() {
         }
         break;
       case ".":
-        if (!decimalRegex.test(currentNum)) {
+        if (!decimalTest(formula, currentNum)) {
           setDisplayFormula(displayFormula + ".");
           setFormula(formula + ".");
         }
@@ -157,15 +165,14 @@ function App() {
     if (testMultipleOps(string)) {
       return (
         Math.round(
-          1000000000000 * eval(string.slice(0, -1))
-        ) / 1000000000000
+          10000000000 * eval(string.slice(0, -1))
+        ) / 10000000000
       ).toString();
 
       //return eval(string.slice(0, -1)).toString();
     } else {
       return (
-        Math.round(1000000000000 * eval(string)) /
-        1000000000000
+        Math.round(10000000000 * eval(string)) / 10000000000
       ).toString();
       //return eval(string).toString();
     }
@@ -175,6 +182,24 @@ function App() {
     let opRegex = /[-/*+=]/g;
     let lastChar = string.toString().slice(-1);
     if (opRegex.test(lastChar)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  function decimalTest(formula, currentNum) {
+    let lastChar = formula.toString().slice(-1);
+    // test if the last char is % or if there's already a decimal
+    if (lastChar === "%" || /\./.test(currentNum)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  function testEmptyDisplay(string, op) {
+    if (string === "" && /[+*/]/.test(op)) {
       return true;
     } else {
       return false;
@@ -194,6 +219,10 @@ function App() {
         Math.round(10000000000 * eval(string)) / 10000000000
       ).toString();
     }
+    if (answer === "NaN") {
+      answer = 0;
+    }
+
     setOutput(answer);
   }
 
@@ -203,7 +232,7 @@ function App() {
         <Formula displayFormula={displayFormula} />
         <Output output={output} />
         <Buttons handleButton={handleButton} />
-        <div>{formula}</div>
+        {/* <div id="debugFormula">{formula}</div> */}
       </div>
     </div>
   );

@@ -1,13 +1,39 @@
 #wrapper {
+  position: fixed;
+  display: flex;
+  left: 0px;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+
+  /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#6b6b6b+0,000000+100 */
+  background: #6b6b6b; /* Old browsers */
+  background: -moz-linear-gradient(
+    top,
+    #6b6b6b 0%,
+    #000000 100%
+  ); /* FF3.6-15 */
+  background: -webkit-linear-gradient(
+    top,
+    #6b6b6b 0%,
+    #000000 100%
+  ); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(
+    to bottom,
+    #6b6b6b 0%,
+    #000000 100%
+  ); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#6b6b6b', endColorstr='#000000',GradientType=0 ); /* IE6-9 */
+
   #calculator {
-    display: inline-block;
     width: 400px;
-    height: 600px;
-    background: dodgerblue;
+    height: 587px;
+    background: rgb(49, 49, 49);
     padding: 10px;
+    border-radius: 20px;
+    margin: auto;
 
     #formula {
-      //width: 100%;
       height: 80px;
       background: black;
       color: white;
@@ -15,9 +41,9 @@
       padding: 10px;
       font-size: 20px;
       word-wrap: break-word;
+      border-radius: 20px 20px 0 0;
     }
     #output {
-      //width: 100%;
       height: 60px;
       background: black;
       color: white;
@@ -33,16 +59,52 @@
       height: 400px;
       grid-template-rows: repeat(5, 1fr);
       grid-template-columns: repeat(4, 1fr);
-      gap: 4px;
+      gap: 8px;
 
-      .clearBtn {
-        grid-column: 1 / span 2;
+      button:focus {
+        outline: none;
       }
-      .delBtn {
-      }
-      .rightBtn {
+      button:active {
+        color: black;
+        background: rgb(236, 236, 236);
       }
       .mainBtn {
+        background: black;
+        color: white;
+        font-size: 24px;
+        border: none;
+      }
+      .topBtn {
+        @extend .mainBtn;
+        background: rgb(138, 138, 138);
+      }
+      .delBtn {
+        @extend .topBtn;
+        padding-top: 10px;
+      }
+      .clearBtn {
+        @extend .topBtn;
+        background: rgb(255, 217, 0);
+      }
+      .rightBtn {
+        @extend .mainBtn;
+        background: rgb(97, 97, 97);
+      }
+      .zeroBtn {
+        @extend .mainBtn;
+        border-radius: 0 0 0 20px;
+        grid-column: 1 / span 2;
+      }
+      .equalsBtn {
+        @extend .mainBtn, .rightBtn;
+        border-radius: 0 0 20px 0;
+        background: rgb(255, 217, 0);
+      }
+      .equalsBtn:active {
+        background: white;
+      }
+      .clearBtn:active {
+        background: white;
       }
     }
   }
