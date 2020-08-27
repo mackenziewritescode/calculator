@@ -12,6 +12,12 @@ const buttonsArr = [
     class: "delBtn",
   },
   {
+    value: "%",
+    display: "%",
+    type: "modifier",
+    class: "topBtn",
+  },
+  {
     value: "/",
     display: "÷",
     type: "operator",
@@ -93,7 +99,7 @@ const buttonsArr = [
     value: "0",
     display: "0",
     type: "number",
-    class: "mainBtn",
+    class: "zeroBtn",
   },
   {
     value: ".",
@@ -102,16 +108,10 @@ const buttonsArr = [
     class: "mainBtn",
   },
   {
-    value: "%",
-    display: "%",
-    type: "modifier",
-    class: "mainBtn",
-  },
-  {
     value: "=",
     display: "=",
     type: "modifier",
-    class: "rightBtn",
+    class: "equalsBtn",
   },
 ];
 
