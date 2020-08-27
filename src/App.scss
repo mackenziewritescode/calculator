@@ -87,36 +87,28 @@ html * {
     background: white;
     color: black;
   }
+  .portfolio:focus {
+    outline: none;
+  }
 
   #footer {
     color: rgb(119, 119, 119);
     text-align: center;
-    // margin: auto;
-    // // bottom: 0%;
-    // // position: fixed;
-    // display: inline-block;
-    // width: 100%;
-
     .footer-link {
       text-decoration: none;
       color: rgb(216, 184, 0);
     }
   }
-  // @media (max-height: 700px) {
-  //   #footer {
-  //     display: none;
-  //   }
-  // }
 
   #content {
-    width: 900px;
+    width: 1000px;
     margin: auto;
     display: flex;
     flex: 0 0 auto;
 
     #text {
       flex-direction: row;
-      width: 400px;
+      width: 500px;
       //background: red;
       margin-left: 100px;
       color: white;
@@ -130,6 +122,19 @@ html * {
         font-family: "HelveticaLight";
         font-size: 16px;
         line-height: 24px;
+        margin: 8px 0;
+      }
+      code {
+        font-family: monospace;
+        font-size: 18px;
+        //background: black;
+        margin: 0px 16px;
+      }
+      a {
+        font-family: "HelveticaLight";
+        text-decoration: none;
+        text-decoration: underline;
+        color: white;
       }
     }
 
@@ -153,14 +158,14 @@ html * {
         border-radius: 20px 20px 0 0;
       }
       #output {
-        height: 55px;
+        height: 58px;
         background: black;
         color: white;
         margin-bottom: 10px;
         font-size: 35px;
         text-align: right;
         padding-right: 10px;
-        padding-top: 12px;
+        padding-top: 9px;
         overflow: hidden;
       }
       #buttonWrap {
@@ -227,7 +232,7 @@ html * {
 
       #text {
         width: 90%;
-        margin: 10px auto 40px;
+        margin: 40px auto 40px;
       }
     }
   }
