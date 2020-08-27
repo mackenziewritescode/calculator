@@ -2,6 +2,49 @@ import React, { useState } from "react";
 import "./App.scss";
 import buttonsArr from "./buttonsArr";
 import { FiDelete } from "react-icons/fi";
+import { RiArrowGoBackLine } from "react-icons/ri";
+
+const portfolio = (
+  <a
+    className="portfolio"
+    href="http://www.sunkenworld.com/about/"
+  >
+    <p className="portfolio-text">
+      <RiArrowGoBackLine /> Back to portfolio
+    </p>
+  </a>
+);
+
+const text = (
+  <div id="text">
+    <h2>This Calculator is better than yours.</h2>
+    <p>
+      Sorry, that was rude. What I mean is, most calculator
+      apps kind of suck. They're rudimentary, inflexible,
+      and just not that useful. <br />
+      But not this one.
+    </p>
+  </div>
+);
+
+const footer = (
+  <footer id="footer">
+    <p>
+      This site was made by{" "}
+      <a
+        className="footer-link"
+        href="http://www.sunkenworld.com/about/"
+      >
+        Mackenzie Charlton
+      </a>{" "}
+      in 2020 with{" "}
+      <a className="footer-link" href="https://reactjs.org">
+        React
+      </a>
+      .
+    </p>
+  </footer>
+);
 
 function Formula(props) {
   return <div id="formula">{props.displayFormula}</div>;
@@ -49,7 +92,7 @@ function Buttons(props) {
   return <div id="buttonWrap">{buttons}</div>;
 }
 
-function App() {
+function App(props) {
   const [output, setOutput] = useState("0");
   const [formula, setFormula] = useState("0");
   const [displayFormula, setDisplayFormula] = useState("");
@@ -228,12 +271,17 @@ function App() {
 
   return (
     <div id="wrapper">
-      <div id="calculator">
-        <Formula displayFormula={displayFormula} />
-        <Output output={output} />
-        <Buttons handleButton={handleButton} />
-        {/* <div id="debugFormula">{formula}</div> */}
+      {portfolio}
+      <div id="content">
+        <div id="calculator">
+          <Formula displayFormula={displayFormula} />
+          <Output output={output} />
+          <Buttons handleButton={handleButton} />
+          {/* <div id="debugFormula">{formula}</div> */}
+        </div>
+        {text}
       </div>
+      {footer}
     </div>
   );
 }
