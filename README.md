@@ -14,7 +14,7 @@ Arg1 + Arg2 = Answer
 
 So, how does this calculator work? In a word, differently.
 
-Instead of storing two numbers and an operator, it stores two strings of formulas and an output. There's one formula for computing, in my code written simply as `formula`, but for clarity's sake we'll call it `compFormula`, and the formula that gets printed out to the formula display, `displayFormula`. `displayFormula` uses characters like "×" and "÷", and percentages look like "10%". This corresponds directly with the input of the user. `compFormula` on the other hand uses typical operators used for computing in coding like "\*" and "/". It also replaces percentages with the actual value divided by 100, so "0.1" instead of "10%". This means that 
+Instead of storing two numbers and an operator, it stores two strings of formulas and an output. There's one formula for computing, in my code written simply as `formula`, but for clarity's sake we'll call it `compFormula`, and the formula that gets printed out to the formula display, `displayFormula`. `displayFormula` uses characters like "×" and "÷", and percentages look like "10%". This corresponds directly with the input of the user. `compFormula` on the other hand uses typical operators used for computing in coding like "\*" and "/". It also replaces percentages with the actual value divided by 100, so "0.1" instead of "10%". This means that formula can be computed using JavaScript's `eval()` function, and that function is executed every time a button is pressed to print out in the display.
 
 
 Let's look at the unique case of percentages for a moment, because I think it's **SUPER** interesting. If we were using the traditional method of writting a caluculator described above, all we would need to do is divide `Arg2` by 100. But because we're working with a potentially long string with multiple numbers and operators, we need to extract the last number from `compFormula` and replace it with `Num/100`. This takes a few steps. First we convert the formula to an array of numbers split wherever there are operators, called `numArr`: 
@@ -38,5 +38,7 @@ const formulaWithPercentage = formula
       .concat(percentage);
 ```
 So now the `formula` will look something like `55\*0.15` while the `displayFormula` looks simply like `55×15%`, and `formula` can be computed using `eval()`.
+
+I won't get into the details here, but if you use the delete button to remove the `%` from `displayFormula`, that conversion we just did to `formula` needs to be reversed. All that for a simple percentage!
 
 It might also be worth mentioning that this project is optomized for mobile use. Have a look for yourself!
