@@ -8,14 +8,20 @@ After you've entered your first number, you follow it up with an operator (+, - 
 
 Once you input a second number, the display clears to show you the second number `Arg2` as you input it. At this point you enter another operator and a calculation happens: 
 ```
-Arg1 + Arg2 = Answer
+Arg1 = Arg1 + Arg2
 ```
-`Arg1` is set to Answer, and it's displayed on the screen. If another number is entered, that new number becomes `Arg2`. This way, the calculator only needs to remember three values: `Arg1`, `Arg2`, and `Op`. Each time a new `Op` is added, `Arg1` and `Arg2` are computed before setting the new `Op` and the sequence continues. Pretty simple!
+The result `Arg1` is then displayed on the screen. If another number is entered, that new number becomes `Arg2`. This way, the calculator only needs to remember three values: `Arg1`, `Arg2`, and `Op`. Each time a new `Op` is added, `Arg1` and `Arg2` are computed before setting the new `Op` and the sequence continues. Pretty simple!
 
 So, how does this calculator work? In a word, differently.
 
-Instead of storing two numbers and an operator, it stores two strings of formulas and an output. There's one formula for computing, in my code written simply as `formula`, but for clarity's sake we'll call it `compFormula`, and the formula that gets printed out to the formula display, `displayFormula`. `displayFormula` uses characters like "×" and "÷", and percentages look like "10%". This corresponds directly with the input of the user. `compFormula` on the other hand uses typical operators used for computing in coding like "\*" and "/". It also replaces percentages with the actual value divided by 100, so "0.1" instead of "10%". This means that formula can be computed using JavaScript's `eval()` function, and that function is executed every time a button is pressed to print out in the display.
-
+Instead of storing two numbers and an operator, it stores two strings of formulas and an output. There's one formula for computing, in my code written simply as `formula`, but for clarity's sake we'll call it `compFormula`, and the formula that gets printed out to the formula display, `displayFormula`. `displayFormula` uses characters like "×" and "÷", and percentages look like "10%". This corresponds directly with the input of the user. `compFormula` on the other hand uses the typical operators used for computing in code like "\*" and "/". It also replaces percentages with the actual value divided by 100, so "0.1" instead of "10%". This means that `formula` can be computed using JavaScript's `eval()` function every time a button is pressed, and this number is the result you see in the display. So if you enter
+```
+55×15%÷9
+```
+The result is computed as
+```
+eval('55\*0.15/9')
+```
 
 Let's look at the unique case of percentages for a moment, because I think it's **SUPER** interesting. If we were using the traditional method of writting a caluculator described above, all we would need to do is divide `Arg2` by 100. But because we're working with a potentially long string with multiple numbers and operators, we need to extract the last number from `compFormula` and replace it with `Num/100`. This takes a few steps. First we convert the formula to an array of numbers split wherever there are operators, called `numArr`: 
 ```
