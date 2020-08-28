@@ -18,7 +18,7 @@ Instead of storing two numbers and an operator, it stores two strings of formula
 ```
 55×15%÷9
 ```
-The result is computed as
+the result is computed as
 ```
 eval('55*0.15/9')
 ```
@@ -49,5 +49,9 @@ Meanwhile, the only thing we need to do to the `displayFormula` is add "%".
 So now the `formula` will look something like `55\*0.15` while the `displayFormula` looks simply like `55×15%`, and `formula` can be computed using `eval()`.
 
 I won't get into the details here, but if you use the delete button to remove the `%` from `displayFormula`, that conversion we just did to `formula` needs to be reversed. All that for a simple percentage!
+
+***
+
+I hope this gives you some insight into how one might go about writting a calculator from scratch. If you want to see all of the code for yourself, head on over to `src/App.js` and `src/App.scss`.
 
 It might also be worth mentioning that this project is optomized for mobile use. Have a look for yourself!
