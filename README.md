@@ -14,16 +14,17 @@ The result `Arg1` is then displayed on the screen. If another number is entered,
 
 So, how does this calculator work? In a word, differently.
 
-Instead of storing two numbers and an operator, it stores two strings of formulas and an output. There's one formula for computing, in my code written simply as `formula`, but for clarity's sake we'll call it `compFormula`, and the formula that gets printed out to the formula display, `displayFormula`. `displayFormula` uses characters like "×" and "÷", and percentages look like "10%". This corresponds directly with the input of the user. `compFormula` on the other hand uses the typical operators used for computing in code like "\*" and "/". It also replaces percentages with the actual value divided by 100, so "0.1" instead of "10%". This means that `formula` can be computed using JavaScript's `eval()` function every time a button is pressed, and this number is the result you see in the display. So if you enter
+Instead of storing two numbers and an operator, it stores two strings of formulas and an output. There's one formula for computing, which for simplicity's sake we'll call `formula`, and the formula that gets printed out to the formula display, `displayFormula`. `displayFormula` uses characters like "×" and "÷", and percentages look like "10%". This corresponds directly with the input of the user. `formula` on the other hand uses the typical operators used for computing in code like "\*" and "/". It also replaces percentages with the actual value divided by 100, so "0.1" instead of "10%". This means that `formula` can be computed using JavaScript's `eval()` function every time a button is pressed, and this number is the result you see in the display. So if you enter
 ```
 55×15%÷9
 ```
 The result is computed as
 ```
-eval('55\*0.15/9')
+eval('55*0.15/9')
 ```
+That's the basic principle, but of course there are many exceptions that need to be considered, like what to do if two operators are entered subsequently and how to handle the delete button (which itself is almost as complex as the rest of the code combined). For now I'd like to look at one particular operation that I find particularly interesting, the percentage (thrilling, I know).
 
-Let's look at the unique case of percentages for a moment, because I think it's **SUPER** interesting. If we were using the traditional method of writting a caluculator described above, all we would need to do is divide `Arg2` by 100. But because we're working with a potentially long string with multiple numbers and operators, we need to extract the last number from `compFormula` and replace it with `Num/100`. This takes a few steps. First we convert the formula to an array of numbers split wherever there are operators, called `numArr`: 
+If we were using the traditional method of writting a caluculator described above to calculate a percentage, all we would need to do is divide `Arg2` by 100. But because we're working with a potentially long string with multiple numbers and operators, we need to extract the last number from `formula` and replace it with `Num/100`. This takes a few steps. First we convert the formula to an array of numbers split wherever there are operators, called `numArr`: 
 ```
 const numArr = formula
       .replace(/[-/*+=]/g, " ")
@@ -43,6 +44,8 @@ const formulaWithPercentage = formula
       .slice(0, -currentNum.length)
       .concat(percentage);
 ```
+Meanwhile, the only thing we need to do to the `displayFormula` is add "%".
+
 So now the `formula` will look something like `55\*0.15` while the `displayFormula` looks simply like `55×15%`, and `formula` can be computed using `eval()`.
 
 I won't get into the details here, but if you use the delete button to remove the `%` from `displayFormula`, that conversion we just did to `formula` needs to be reversed. All that for a simple percentage!
