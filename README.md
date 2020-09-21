@@ -1,4 +1,4 @@
-# A Better Calculator App.
+# A Better Calculator App
 
 Check it out [here](https://mackenziewritescode.github.io/calculator/). It's written using React.js.
 
