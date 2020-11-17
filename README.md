@@ -55,3 +55,5 @@ I won't get into the details here, but if you use the delete button to remove th
 I hope this gives you some insight into how one might go about writting a calculator from scratch. If you want to see all of the code for yourself, head on over to `src/App.js` and `src/App.scss`.
 
 It might also be worth mentioning that this project is optomized for mobile use. Have a look for yourself!
+
+Please check out my portfolio at https://www.sunkenworld.com if you want to see more of my work. Thanks for reading!
