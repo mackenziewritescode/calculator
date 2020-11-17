@@ -1,6 +1,6 @@
 # Clever Calculator
 
-Check it out [here](https://mackenziewritescode.github.io/calculator/). It's written using React.js.
+Check it out [here](https://www.sunkenworld.com/calculator). It's written using React.js.
 
 As hinted in the project itself, this isn't your average calculator app. What makes this one different? First, let's consider how your average calculator works, like the one found on any iPhone.
 
