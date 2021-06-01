@@ -1,6 +1,8 @@
 # Clever Calculator
 
-Check it out [here](https://www.sunkenworld.com/calculator). It's written using React.js. If you want to run it locally: clone the repository, run `npm install` and then `npm run start`.
+This calculator app is a personal project written using React.js. Check it out [here](https://www.sunkenworld.com/calculator). 
+
+If you want to run it locally: clone the repository, run `npm install` and then `npm run start`.
 
 As hinted in the project itself, this isn't your average calculator app. What makes this one different? First, let's consider how your average calculator works, like the one found on any iPhone.
 
