@@ -4,7 +4,7 @@ This calculator app is a personal project written using React.js. Check it out [
 
 If you want to run it locally: clone the repository, run `npm install` and then `npm run start`.
 
-As hinted in the project itself, this isn't your average calculator app. What makes this one different? First, let's consider how your average calculator works, like the one found on any iPhone.
+As hinted in the project itself, this isn't your average calculator app. What makes this one different? First, let's consider how a basic calculator works, like the one found on any iPhone.
 
 After you've entered your first number, you follow it up with an operator (+, - ,* , /, =, etc.). That number is then stored as the first argument `Arg1`, and the operator `Op` is stored as well. For this example, let's say the operator is "+". Up until this point, the display only shows `Arg1`.
 
